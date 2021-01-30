@@ -3,15 +3,21 @@
 Week03 作业题目（周三）：
 
 1.（必做）整合你上次作业的 httpclient/okhttp；
-
+https://github.com/gugongerguo/JAVA-01/blob/main/Week_03/java/src/main/java/geek/week3/gateway1/HttpClientHelper.java
 
 2.（选做）使用 netty 实现后端 http 访问（代替上一步骤）
+https://github.com/gugongerguo/JAVA-01/blob/main/Week_03/java/src/main/java/geek/week3/gateway1/netty/NettyHttpServer.java
 
 Week03 作业题目（周日）：
 
 1.（必做）实现过滤器。
+
+https://github.com/gugongerguo/JAVA-01/tree/main/Week_03/java/src/main/java/geek/week3/gateway2
+
 2.（选做）实现路由。
+
 3.（选做）跑一跑课上的各个例子，加深对多线程的理解
+
 4.（选做）完善网关的例子，试着调整其中的线程池参数
 
 
