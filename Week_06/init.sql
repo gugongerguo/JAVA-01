@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `user`(
+CREATE TABLE IF NOT EXISTS `t_user`(
    `id` INT not null AUTO_INCREMENT comment 'id',
    `name` VARCHAR(20) NOT NULL comment '用户名',
    `nickname` VARCHAR(20) NOT NULL comment '昵称',
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `user`(
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `order`(
+CREATE TABLE IF NOT EXISTS `t_order`(
    `id` INT not null AUTO_INCREMENT comment 'id',
    `user_id` int NOT NULL comment '用户id',
    `price` VARCHAR(20) NOT NULL comment '价格',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `order`(
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `commodity`(
+CREATE TABLE IF NOT EXISTS `t_commodity`(
    `id` INT not null AUTO_INCREMENT comment 'id',
    `code` VARCHAR(50) NOT NULL comment '编码',
    `name` VARCHAR(20) NOT NULL comment '名称',
