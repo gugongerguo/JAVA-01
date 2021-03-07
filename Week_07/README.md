@@ -94,3 +94,8 @@
 
      依据场景来决定优化的程度
 
+
+
+2. （必做）读写分离-动态切换数据源版本1.0
+   - 作业路径：https://github.com/gugongerguo/JAVA-01/tree/main/Week_07/dynamicds
+   - 实现一主二从，主写，从读，二从负载均衡。
