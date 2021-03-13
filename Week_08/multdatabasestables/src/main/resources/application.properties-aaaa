@@ -1,0 +1,29 @@
+server.port=8080
+spring.application.name=mult-database-table
+mybatis.mapper-locations=classpath*:/mapper/**/*.xml
+mybatis.type-aliases-package=com.hf.multdatabasestables.model
+mybatis.configuration.map-underscore-to-camel-case=true
+spring.shardingsphere.props.sql-show=true
+spring.shardingsphere.datasource.names=ds0,ds1
+spring.shardingsphere.datasource.common.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.common.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.shardingsphere.datasource.ds0.jdbc-url=jdbc:mysql://127.0.0.1:3326/split_table?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+spring.shardingsphere.datasource.ds0.username=root
+spring.shardingsphere.datasource.ds0.password=
+spring.shardingsphere.datasource.ds1.jdbc-url=jdbc:mysql://127.0.0.1:3336/split_table?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+spring.shardingsphere.datasource.ds1.username=root
+spring.shardingsphere.datasource.ds1.password=
+spring.shardingsphere.rules.sharding.binding-tables=t-order
+spring.shardingsphere.rules.sharding.tables.t-order.actual-data-nodes=ds$->{0..1}.t_order_$->{0..16}
+spring.shardingsphere.rules.sharding.tables.t-order.key-generate-strategy.column=id
+spring.shardingsphere.rules.sharding.tables.t-order.key-generate-strategy.key-generator-name=snow-flake
+spring.shardingsphere.rules.sharding.tables.t-order.table-strategy.standard.sharding-column=id
+spring.shardingsphere.rules.sharding.tables.t-order.table-strategy.standard.sharding-algorithm-name=t-order-inline
+spring.shardingsphere.rules.sharding.tables.t-order.database-strategy.standard.sharding-column=id
+spring.shardingsphere.rules.sharding.tables.t-order.database-strategy.standard.sharding-algorithm-name=database-inline
+spring.shardingsphere.rules.sharding.sharding-algorithms.database-inline.type=INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.database-inline.props.algorithm-expression=ds$->{id % 2}
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.type=INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.props.algorithm-expression=t_order_$->{id % 16}
+spring.shardingsphere.rules.sharding.key-generators.snow-flake.type=SNOWFLAKE
+spring.shardingsphere.rules.sharding.key-generators.snow-flake.props.worker-id=123

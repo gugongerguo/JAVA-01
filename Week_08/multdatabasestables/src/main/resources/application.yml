@@ -1,0 +1,54 @@
+mybatis:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.hf.multdatabasestables.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+spring:
+  shardingsphere:
+    props:
+      sql-show: true
+    datasource:
+      names: ds0,ds1
+      common:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      ds0:
+        jdbc-url: jdbc:mysql://127.0.0.1:3326/split_table?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password:
+      ds1:
+        jdbc-url: jdbc:mysql://127.0.0.1:3336/split_table?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password:
+    rules:
+      sharding:
+        binding-tables: t_order
+        tables:
+          t_order:
+            actual-data-nodes: ds$->{0..1}.t_order_$->{0..16}
+            key-generate-strategy:
+              column: id
+              key-generator-name: snow-flake
+            table-strategy:
+              standard:
+                sharding-column: id
+                sharding-algorithm-name: t-order-inline
+            database-strategy:
+              standard:
+                sharding-column: user_id
+                sharding-algorithm-name: database-inline
+        sharding-algorithms:
+          database-inline:
+            type: INLINE
+            props:
+              algorithm-expression: ds$->{user_id % 2}
+          t-order-inline:
+            type: INLINE
+            props:
+              algorithm-expression: t_order_$->{id % 17}
+        key-generators:
+          snow-flake:
+            type: SNOWFLAKE
+            props:
+              worker-id: 123

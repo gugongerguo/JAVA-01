@@ -1,0 +1,49 @@
+spring:
+  shardingsphere:
+    props:
+      sql-show: true
+    dataSources:
+      names: ds_0,ds_1
+      ds_0:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3326/dynamic_demo?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password:
+      ds_1:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3336/dynamic_demo?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password:
+    rules:
+      tables:
+        t_order:
+          actualDataNodes: ds_${0..1}.t_order_${0..15}
+          tableStrategy:
+            standard:
+              shardingColumn: id
+              shardingAlgorithmName: t_order_inline
+          keyGenerateStrategy:
+            column: id
+            keyGeneratorName: snowflake
+      defaultDatabaseStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: database_inline
+      defaultTableStrategy:
+        none:
+      defaultKeyGenerateStrategy:
+        none:
+      shardingAlgorithms:
+        database_inline:
+          type: INLINE
+          props:
+            algorithm-expression: ds_&{id % 2}
+        t_order_inline:
+          type: INLINE
+          props:
+            algorithm-expression: ds_&{id % 16}
+      keyGenerators:
+        snowflake:
+          type: SNOWFLAKE
+          props:
+            worker-id: 0
